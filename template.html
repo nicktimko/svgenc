@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>SVG Encoding Test</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <style>
-            .chk {
-                height: 20px;
-                width: 20px;
-                display: inline-block;
-                background-size: 20px 20px;
-            }
-            {{ 'check.min.svg'|chkcss('file') }}
-            {{ raw|chkcss('raw') }}
-            {{ b64|chkcss('b64') }}
-            {% for s in skips %}
-                {{ s.uri|chkcss('x' + s.x) }}
-                {{ s.uri_u8|chkcss('x' + s.x + '-u8') }}
-                {{ s.uri_u8f|chkcss('x' + s.x + '-u8f') }}
-            {% endfor %}
-        </style>
-    </head>
-    <body>
-    <div class="container">
-        <table class="table">
-            <tr>
-                <th>SVG file</th>
-                <td><div class="chk chk-file"></div></td>
-            </tr>
-            <tr>
-                <th>No encoding</th>
-                <td><div class="chk chk-raw"></div></td>
-            </tr>
-            <tr>
-                <th>Base64 encoded</th>
-                <td><div class="chk chk-b64"></div></td>
-            </tr>
-        </table>
-        <hr>
-        <table class="table">
-            <tr>
-                <th>Using<br>literal<br>char</th>
-                <th>No<br>encoding<br>specified</th>
-                <th><code>utf8</code></th>
-                <th><code>charset=UTF-8</code></th>
-            </tr>
-            {% for s in skips %}
-                <tr>
-                    <td><code>{{ s.c }}</code> (0x{{ s.x }})</td>
-                    <td><div class="chk chk-x{{ s.x }}"></div></td>
-                    <td><div class="chk chk-x{{ s.x }}-u8"></div></td>
-                    <td><div class="chk chk-x{{ s.x }}-u8f"></div></td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-    </body>
+  <head>
+    <meta charset="utf-8">
+    <title>SVG Encoding Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+      .chk {
+        height: 20px;
+        width: 20px;
+        display: inline-block;
+        background-size: 20px 20px;
+      }
+      {% for g in general %}
+        {{ g.uri|chkcss(g.cls) }}
+      {% endfor %}
+      {% for s in skips %}
+        {{ s.uri|chkcss('x' + s.x) }}
+        {{ s.uri_u8|chkcss('x' + s.x + '-u8') }}
+        {{ s.uri_u8f|chkcss('x' + s.x + '-u8f') }}
+      {% endfor %}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <table class="table">
+      {% for g in general %}
+        <tr>
+          <th>{{ g.name|safe }}<!--(URI: {{ g.uri|length }} B)--></th>
+          <td><div class="chk chk-{{ g.cls }}"></div></td>
+        </tr>
+      {% endfor %}
+    </table>
+    <hr>
+    <table class="table">
+      <tr>
+        <th>Using<br>literal<br>char</th>
+        <th>No<br>encoding<br>specified</th>
+        <th><code>utf8</code></th>
+        <th><code>charset=UTF-8</code></th>
+      </tr>
+      {% for s in skips %}
+        <tr>
+          <td><code>{{ s.c }}</code> (0x{{ s.x }})</td>
+          <td><div class="chk chk-x{{ s.x }}"></div></td>
+          <td><div class="chk chk-x{{ s.x }}-u8"></div></td>
+          <td><div class="chk chk-x{{ s.x }}-u8f"></div></td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+  </body>
 </html>

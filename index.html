@@ -18,7 +18,9 @@
       
         .chk-b64 {background-image:url('data:image/svg+xml;base64,PCEtLSMkJSYoKSw8Pj9bXF1eYHt8fX4tLT48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjM1IiBoZWlnaHQ9IjM1Ij48cGF0aCBkPSJNNi44IDIyLjBsNy41IDdMMjggNyIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTpncmVlbjsiIHN0cm9rZS13aWR0aD0iOCIvPjwvc3ZnPg==');}
       
-        .chk-min {background-image:url('data:image/svg+xml,%3C%21--%23%24%25%26%28%29%2C%3C%3E%3F%5B%5C%5D%5E%60%7B%7C%7D%7E--%3E%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2235%22%20height%3D%2235%22%3E%3Cpath%20d%3D%22M6.8%2022.0l7.5%207L28%207%22%20fill%3D%22none%22%20style%3D%22stroke%3Agreen%3B%22%20stroke-width%3D%228%22/%3E%3C/svg%3E');}
+        .chk-url {background-image:url('data:image/svg+xml,%3C%21--%23%24%25%26%28%29%2C%3C%3E%3F%5B%5C%5D%5E%60%7B%7C%7D%7E--%3E%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2235%22%20height%3D%2235%22%3E%3Cpath%20d%3D%22M6.8%2022.0l7.5%207L28%207%22%20fill%3D%22none%22%20style%3D%22stroke%3Agreen%3B%22%20stroke-width%3D%228%22/%3E%3C/svg%3E');}
+      
+        .chk-min {background-image:url('data:image/svg+xml,%3C!--%23$%25&(),%3C%3E?%5B\%5D%5E%60%7B%7C%7D~--%3E%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2235%22 height=%2235%22%3E%3Cpath d=%22M6.8 22.0l7.5 7L28 7%22 fill=%22none%22 style=%22stroke:green;%22 stroke-width=%228%22/%3E%3C/svg%3E');}
       
       
         .chk-x20 {background-image:url('data:image/svg+xml,%3C%21--%23%24%25%26%28%29%2C%3C%3E%3F%5B%5C%5D%5E%60%7B%7C%7D%7E--%3E%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 width%3D%2235%22 height%3D%2235%22%3E%3Cpath d%3D%22M6.8 22.0l7.5 7L28 7%22 fill%3D%22none%22 style%3D%22stroke%3Agreen%3B%22 stroke-width%3D%228%22/%3E%3C/svg%3E');}
@@ -128,22 +130,27 @@
     <table class="table">
       
         <tr>
-          <th>SVG file<!--(URI: 13 B)--></th>
+          <th>SVG file (URI: 13 B)</th>
           <td><div class="chk chk-file"></div></td>
         </tr>
       
         <tr>
-          <th>No encoding<!--(URI: 197 B)--></th>
+          <th>No encoding (URI: 197 B)</th>
           <td><div class="chk chk-raw"></div></td>
         </tr>
       
         <tr>
-          <th>Base64 encoded<!--(URI: 266 B)--></th>
+          <th>Base64 encoded (URI: 266 B)</th>
           <td><div class="chk chk-b64"></div></td>
         </tr>
       
         <tr>
-          <th>URL Encoded <code>"#%&lt;>[]^{|}`</code><!--(URI: 321 B)--></th>
+          <th>URL encoded default (URI: 321 B)</th>
+          <td><div class="chk chk-url"></div></td>
+        </tr>
+      
+        <tr>
+          <th>URL encoded only <code>"#%&lt;>[]^{|}`</code> (URI: 263 B)</th>
           <td><div class="chk chk-min"></div></td>
         </tr>
       

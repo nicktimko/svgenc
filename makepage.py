@@ -40,16 +40,18 @@ def main():
         'b64': gdi(base64.b64encode(svg), charset='base64'),
     }
 
-    context['skips'] = [
-        {
+    available_chars = [c for c in URL_ENC_CHARS if c in svg]
+
+    context['skips'] = []
+    for c in available_chars:
+        svg_encoded = url_encode(svg, chars=available_chars, skip=c)
+        context['skips'].append({
             'c': c,
             'x': format(ord(c), 'X'),
-            'uri': gdi(url_encode(svg, skip=c)),
-            'uri_u8': gdi(url_encode(svg, skip=c), charset='utf8'),
-            'uri_u8f': gdi(url_encode(svg, skip=c), charset='charset=UTF-8'),
-        }
-        for c in URL_ENC_CHARS
-    ]
+            'uri': gdi(svg_encoded),
+            'uri_u8': gdi(svg_encoded, charset='utf8'),
+            'uri_u8f': gdi(svg_encoded, charset='charset=UTF-8'),
+        })
 
     template = env.get_template('template.html')
     with open('svgenc.html', 'w') as f:

@@ -19,10 +19,11 @@ def get_template(f):
     return env.get_template(f)
 
 URL_ENC_CHARS = " !\"#$%&'(),:;<=>?[\]^`{|}~"
+MINIMAL_CHARS = "\"#%<>[]^{|}`"
 
 def url_encode(payload, chars=URL_ENC_CHARS, skip=''):
     return ''.join(
-        '%{:02X}'.format(ord(c)) if (c not in skip) and (c in URL_ENC_CHARS) else c
+        '%{:02X}'.format(ord(c)) if (c not in skip) and (c in chars) else c
         for c
         in payload
     )
@@ -35,10 +36,14 @@ def main():
     args = parser.parse_args()
 
     svg = ''.join(l.strip() for l in args.svg)
-    context = {
-        'raw': gdi(svg),
-        'b64': gdi(base64.b64encode(svg), charset='base64'),
-    }
+    context = {}
+    context['general'] = [
+        {'name': 'SVG file', 'cls': 'file', 'uri': 'check.min.svg'},
+        {'name': 'No encoding', 'cls': 'raw', 'uri': gdi(svg)},
+        {'name': 'Base64 encoded', 'cls': 'b64', 'uri': gdi(base64.b64encode(svg), charset='base64')},
+        {'name': 'URL encoded default', 'cls': 'url', 'uri': gdi(url_encode(svg))},
+        {'name': 'URL encoded only <code>"#%&lt;>[]^{|}`</code>', 'cls': 'min', 'uri': gdi(url_encode(svg, chars=MINIMAL_CHARS))},
+    ]
 
     available_chars = [c for c in URL_ENC_CHARS if c in svg]
 
@@ -54,7 +59,7 @@ def main():
         })
 
     template = env.get_template('template.html')
-    with open('svgenc.html', 'w') as f:
+    with open('index.html', 'w') as f:
         f.write(template.render(context))
 
 

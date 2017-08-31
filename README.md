@@ -1,6 +1,6 @@
-# [What characters do I need to encode in a CSS data URI?](https://stackoverflow.com/q/34782535/194586)
+# What characters do I need to encode in a CSS data URI?
 
-Chrome seems to support direct insertion of SVG into a CSS URL to avoid having to base64 encode it and inflate the size by 33% which is kinda cool/handy. IE chokes on such things, however, desiring that the data URI is URL-encoded (e.g. `<` &rarr; `%3C`). Because some characters are increased in size by 200%, any savings are quickly obliterated, so might as well just use base64.
+Chrome seems to support direct insertion of SVG into a CSS URL to avoid having to base64 encode it and increase the size by ~1.33x which is kinda cool/handy. IE chokes on such things, however, desiring that the data URI is URL-encoded (e.g. `<` &rarr; `%3C`). Because *some* characters are increased in size by 3x, any savings are quickly obliterated, so might as well just use base64.
 
 For a little SVG file:
 
@@ -10,7 +10,7 @@ For a little SVG file:
 
 However, with some monkeying around, I found that ol' `%20` isn't actually required for spaces in IE CSS data URIs, so for every space in the SVG, you could drop the size by 2 bytes. What characters do you actually have to encode?
 
-Here, I used [`makepage.py`](makepage.py) to encode a SVG skipping several ways, encoding all but one special character that *should* be URL encoded (`! \"#$%&'(),:;<=>?[\]^``{|}~`) and used [Browserstack](https://www.browserstack.com/screenshots/5068c56b516fde070dad0e07ae4942c605c18a4b) to view the result in multiple browsers. It seems that the lowest common denominator (IE) only requires that `"'#%<>[]^``{|}` be escaped (when the data URI is wrapped in quotes).
+Here, I used [`makepage.py`](makepage.py) to encode a little test SVG into a data URI several ways, encoding all but one special character that *should* be URL encoded (`! \"#$%&'(),:;<=>?[\]^``{|}~`) and used [Browserstack](https://www.browserstack.com/screenshots/5068c56b516fde070dad0e07ae4942c605c18a4b) to view the result in multiple browsers. It seems that the lowest common denominator (IE) only requires that `"'#%<>[]^``{|}` be escaped (when the data URI is wrapped in quotes).
 
 Try your browser at https://nicktimko.github.io/svgenc
 
@@ -40,5 +40,7 @@ url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20vi
 ```
 url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 21.9 31%22%3E%3Cpath fill=%22%23000%22 d=%22M10.9 0C4.9 0 0 5.5 0 10.9 0 20.1 10.9 31 10.9 31s10.9-10.9 10.9-20.1C21.9 5.5 17 0 10.9 0zM6.1 10.9c0-2.7 2.2-4.8 4.8-4.8s4.8 2.2 4.8 4.8c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8z%22/%3E%3C/svg%3E');
 ```
+
+-- [From a question I originally asked/answered at StackOverflow](https://stackoverflow.com/q/34782535/194586)
 
   [1]: http://i.stack.imgur.com/qHsMy.png
